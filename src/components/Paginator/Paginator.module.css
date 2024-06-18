@@ -1,0 +1,36 @@
+.PaginatorContainer {
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.PaginatorContainer button {
+    outline: none;
+    border: #030b26 solid 2px;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    color: #0196bd;
+    background-color: inherit;
+    cursor: pointer;
+    transition-duration: 0.5s;
+}
+
+button[disabled] {
+    color: #545659;
+}
+
+button:hover {
+    color: snow;
+    text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em #0196bd;
+}
+
+button[disabled]:hover {
+    color: #545659;
+    text-shadow: none;
+}
+
+.active {
+    text-decoration: underline;
+}

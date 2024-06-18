@@ -1,0 +1,19 @@
+.UserInfo {
+    display: flex;
+    align-items: center;
+}
+
+.UserInfo > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.UserInfo div {
+    color: #b8bbc2;
+    font-size: 18px;
+}
+
+.UserInfo img {
+    width: 40px;
+}

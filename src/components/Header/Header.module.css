@@ -1,0 +1,48 @@
+.Header {
+    height: 10vh;
+    background-color: #030b26;
+    padding: 0 8vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logoSection {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.logoSection > div {
+    font-size: 32px;
+    color: #0196bd;
+    height: fit-content;
+    font-weight: 600;
+}
+
+.logoSection > img {
+    margin-top: -6px;
+    width: 70px;
+}
+
+ul {
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+}
+
+ul a {
+    text-decoration: none;
+    color: #b8bbc2;
+    font-size: 26px;
+    transition-duration: 0.5s;
+}
+
+ul a:hover {
+    color: snow;
+    text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em #0196bd;
+}
+
+a[class="active"] {
+    text-decoration: underline;
+}
