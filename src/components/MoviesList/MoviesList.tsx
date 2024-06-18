@@ -3,16 +3,19 @@ import {useAppDispatch, useAppSelector} from "../../hooks/reduxHooks";
 import {moviesActions} from "../../redux/slices/moviesSlice";
 import MoviesListCard from "../MoviesListCard/MoviesListCard";
 import css from './MovieList.module.css';
+import {useSearchParams} from "react-router-dom";
 
 const MoviesList = () => {
+    const [searchParams] = useSearchParams();
     const page = useAppSelector(state =>
         state.moviesSlice.currentPage);
 
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(moviesActions.getPageWithMovies(1));
-    }, []);
+        const pageNumber = parseInt(searchParams.get('page') ?? '1', 10);
+        dispatch(moviesActions.getPageWithMovies(pageNumber));
+    }, [searchParams]);
 
     return (
         <div className={css.MovieList}>

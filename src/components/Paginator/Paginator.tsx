@@ -2,16 +2,17 @@ import React, {ReactElement} from 'react';
 import {useAppDispatch, useAppSelector} from "../../hooks/reduxHooks";
 import {pagesActions} from "../../redux/slices/pagesSlice";
 import css from './Paginator.module.css';
-import {moviesActions} from "../../redux/slices/moviesSlice";
+import {useNavigate} from "react-router-dom";
 
 const Paginator = () => {
     const {currentPagesSection, activePageNumber} = useAppSelector(state => state.pagesSlice);
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const pageButtonClickHandler = (pageNumber: number) => {
         dispatch(pagesActions.setActivePage(pageNumber));
-        dispatch(moviesActions.getPageWithMovies(pageNumber));
 
+        navigate('/movies?page=' + pageNumber);
         window.scrollTo({top: 0});
     }
 
