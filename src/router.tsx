@@ -2,6 +2,9 @@ import {createBrowserRouter, RouteObject} from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import HomePage from "./pages/HomePage/HomePage";
 import MoviesPage from "./pages/MoviesPage/MoviesPage";
+import GenresPage from "./pages/GenresPage/GenresPage";
+import MoviesList from "./components/MoviesList/MoviesList";
+import SearchPage from "./pages/SearchPage/SearchPage";
 
 const routes: RouteObject[] = [
     {
@@ -22,7 +25,31 @@ const routes: RouteObject[] = [
             },
             {
                 path: 'genres',
-                element: <MoviesPage />
+                element: <GenresPage />,
+                children: [
+                    {
+                        index: true,
+                        element: <MoviesList whereIAm={'genres'} />
+                    },
+                    {
+                        path: ':genreId',
+                        element: <MoviesList whereIAm={'genres'} />
+                    }
+                ]
+            },
+            {
+                path: 'search',
+                element: <SearchPage />,
+                children: [
+                    {
+                        index: true,
+                        element: <MoviesList whereIAm={'search'} />
+                    },
+                    {
+                        path: ':queryName',
+                        element: <MoviesList whereIAm={'search'} />
+                    }
+                ]
             }
         ]
     }

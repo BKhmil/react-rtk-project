@@ -9,8 +9,8 @@ const MoviesPage = () => {
 
     return (
         <div className={css.MoviesPage}>
-            <MoviesList />
-            <Paginator />
+            <MoviesList whereIAm={'movies'}/>
+            <Paginator forWhat={'movies'}/>
         </div>
     );
 };

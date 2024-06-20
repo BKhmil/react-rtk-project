@@ -1,10 +1,16 @@
-import React from 'react';
+import React, {FC} from 'react';
+import {IGenre} from "../../interfaces/genre.interface";
+import css from './GenreBadge.module.css';
 
-const GenreBadge = () => {
+interface IProps {
+    genre: IGenre;
+    clickHandler: () => void;
+    activeId?: number;
+}
+
+const GenreBadge: FC<IProps> = ({genre, clickHandler, activeId}) => {
     return (
-        <div>
-
-        </div>
+        <span className={css.GenreBadge + ' ' + (activeId === genre.id ? css.active : '')} onClick={() => clickHandler()}>{genre.name}</span>
     );
 };
 

@@ -1,0 +1,21 @@
+.poster {
+    position: relative;
+}
+
+.play {
+    position: absolute;
+    top: 16%;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease;
+}
+
+.poster:hover .play {
+    opacity: 1;
+    cursor: pointer;
+}

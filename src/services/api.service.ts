@@ -14,8 +14,6 @@ const apiService = axios.create({
 apiService.interceptors.request.use(request => {
     request.headers.Authorization = 'Bearer ' + _apiAccessToken;
 
-    console.log(request.headers.Authorization);
-
     return request;
 });
 

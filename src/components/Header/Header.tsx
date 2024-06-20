@@ -3,6 +3,7 @@ import logo from '../../assets/icons/logo.png';
 import css from './Header.module.css';
 import {NavLink, useNavigate} from "react-router-dom";
 import UserInfo from "../UserInfo/UserInfo";
+import SearchBar from "../SearchBar/SearchBar";
 
 const Header = () => {
     const navigate = useNavigate();
@@ -26,7 +27,7 @@ const Header = () => {
                     </li>
                 </ul>
             </nav>
-            <div style={{color: 'white'}}>search-bar</div>
+            <SearchBar />
             <UserInfo />
         </header>
     );

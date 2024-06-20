@@ -15,6 +15,7 @@ const MoviesListCard: FC<IProps> = ({movie}) => {
             <PosterPreview
                 path={posterBaseURL + '/w200' + movie.poster_path}
                 alter={movie.title}
+                withPlay={true}
                 styles={{marginBottom: '5px'}} />
             <StarRatings
                 rating={movie.vote_average}

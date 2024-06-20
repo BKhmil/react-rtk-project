@@ -4,14 +4,16 @@ const posterBaseURL = 'https://image.tmdb.org/t/p';
 const urls = {
     discover: {
         getMoviesPage: (pageNumber: number) =>
-            baseURL + '/discover/movie?page=' + pageNumber.toString()
+            baseURL + '/discover/movie?page=' + pageNumber.toString(),
+        getMoviesByGenre: (genreIds: number, pageNumber: string) =>
+            baseURL + '/discover/movie?with_genres=' + genreIds + '&page=' + pageNumber
+    },
+    search: {
+        getMovieByQuery: (query: string) =>
+            baseURL + 'search/movie?query=' + query
     },
     genres: {
-        movieList: baseURL + '/genre/movie'
-    },
-    poster: {
-        getPosterForListItem: (posterPath: string) => posterBaseURL + '/w300' + posterPath,
-        getPosterForFullInfoItem: (posterPath: string) => posterBaseURL + '/w600' + posterPath
+        movieList: baseURL + '/genre/movie/list'
     }
 }
 

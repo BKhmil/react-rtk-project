@@ -1,28 +1,27 @@
-import React, {useEffect} from 'react';
-import {useAppDispatch, useAppSelector} from "../../hooks/reduxHooks";
-import {moviesActions} from "../../redux/slices/moviesSlice";
+import React from 'react';
+import {useAppSelector} from "../../hooks/reduxHooks";
 import MoviesListCard from "../MoviesListCard/MoviesListCard";
 import css from './MovieList.module.css';
-import {useSearchParams} from "react-router-dom";
+import withFetching from "../../hoc/withFetching";
+import Preloader from "../Preloader/Preloader";
 
 const MoviesList = () => {
-    const [searchParams] = useSearchParams();
-    const page = useAppSelector(state =>
-        state.moviesSlice.currentPage);
-
-    const dispatch = useAppDispatch();
-
-    useEffect(() => {
-        const pageNumber = parseInt(searchParams.get('page') ?? '1', 10);
-        dispatch(moviesActions.getPageWithMovies(pageNumber));
-    }, [searchParams]);
+    const {currentPage, loading, error} = useAppSelector(state => state.moviesSlice);
 
     return (
         <div className={css.MovieList}>
-            {page.results.map((movie, index) =>
-                <MoviesListCard key={index} movie={movie} />)}
+            {
+                loading ?
+                    <Preloader />
+                    :
+                    error ?
+                        <div>error</div>
+                            :
+                        currentPage.results.map((movie, index) => (
+                            <MoviesListCard key={index} movie={movie} />))
+            }
         </div>
     );
 };
 
-export default MoviesList;
+export default withFetching(MoviesList);
