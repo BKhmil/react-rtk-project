@@ -2,11 +2,13 @@ import {createAsyncThunk, createSlice, isPending} from "@reduxjs/toolkit";
 import {IPage} from "../../interfaces/page.interface";
 import {AxiosError} from "axios";
 import {movieService} from "../../services/movie.service";
+import {ISingleMovie} from "../../interfaces/singleMovie.interface";
 
 type TMoviesSlice = {
     currentPage: IPage;
     loading: boolean;
     error: string | null;
+    movie: ISingleMovie | null;
 }
 
 const initialState: TMoviesSlice = {
@@ -17,7 +19,8 @@ const initialState: TMoviesSlice = {
         total_results: 0
     },
     loading: false,
-    error: null
+    error: null,
+    movie: null
 }
 
 const getPageWithMovies = createAsyncThunk<IPage, number>(
@@ -49,8 +52,19 @@ const getMoviesByQuery = createAsyncThunk<IPage, {query: string, pageNumber: str
     async ({query, pageNumber}, {fulfillWithValue, rejectWithValue}) => {
         try {
             const page = await movieService.searchMoviesByQuery(query, pageNumber);
-            console.log(page);
             return fulfillWithValue(page);
+        } catch (e) {
+            return rejectWithValue(e as AxiosError);
+        }
+    }
+);
+
+const getMovieById = createAsyncThunk<ISingleMovie, number>(
+    'moviesSlice/getMovieById',
+    async (movieId: number, {fulfillWithValue, rejectWithValue}) => {
+        try {
+            const movie = await movieService.findMovieById(movieId);
+            return fulfillWithValue(movie);
         } catch (e) {
             return rejectWithValue(e as AxiosError);
         }
@@ -87,7 +101,15 @@ const moviesSlice = createSlice({
                 state.loading = false;
                 state.error = action.error.message || 'Movies by query loading error';
             })
-            .addMatcher(isPending(getPageWithMovies, getMoviesPageWithGenres, getMoviesByQuery), state => {
+            .addCase(getMovieById.fulfilled, (state, action) => {
+                state.movie = action.payload;
+                state.loading = false;
+            })
+            .addCase(getMovieById.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message || 'No movies by current id';
+            })
+            .addMatcher(isPending(getPageWithMovies, getMoviesPageWithGenres, getMoviesByQuery, getMovieById), state => {
                 state.loading = true;
                 state.error = null;
             })
@@ -97,7 +119,8 @@ const moviesActions = {
     ...moviesSlice.actions,
     getPageWithMovies,
     getMoviesPageWithGenres,
-    getMoviesByQuery
+    getMoviesByQuery,
+    getMovieById
 }
 
 export {

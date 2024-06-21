@@ -14,6 +14,10 @@ const urls = {
     },
     genres: {
         movieList: baseURL + '/genre/movie/list'
+    },
+    findMovieById: {
+        find: (id: number) =>
+            baseURL + '/movie/' + id
     }
 }
 

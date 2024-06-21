@@ -6,7 +6,7 @@ import css from './MoviesListCard.module.css';
 import PosterPreview from "../PosterPreview/PosterPreview";
 
 interface IProps {
-    movie: IMovie
+    movie: IMovie;
 }
 
 const MoviesListCard: FC<IProps> = ({movie}) => {
@@ -16,7 +16,9 @@ const MoviesListCard: FC<IProps> = ({movie}) => {
                 path={posterBaseURL + '/w200' + movie.poster_path}
                 alter={movie.title}
                 withPlay={true}
-                styles={{marginBottom: '5px'}} />
+                styles={{marginBottom: '5px'}}
+                movieId={movie.id}
+            />
             <StarRatings
                 rating={movie.vote_average}
                 starRatedColor="gold"

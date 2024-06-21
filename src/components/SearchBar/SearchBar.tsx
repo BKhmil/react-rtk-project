@@ -1,6 +1,6 @@
 import React from 'react';
 import {SubmitHandler, useForm} from "react-hook-form";
-import {IForm} from "../../interfaces/form";
+import {IForm} from "../../interfaces/form.interface";
 import {useNavigate} from "react-router-dom";
 import css from './SearchBar.module.css';
 import searchIcon from '../../assets/icons/searchIcon.png';

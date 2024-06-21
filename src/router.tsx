@@ -5,6 +5,8 @@ import MoviesPage from "./pages/MoviesPage/MoviesPage";
 import GenresPage from "./pages/GenresPage/GenresPage";
 import MoviesList from "./components/MoviesList/MoviesList";
 import SearchPage from "./pages/SearchPage/SearchPage";
+import MovieInfoPage from "./pages/MovieInfoPage/MovieInfoPage";
+import MovieInfo from "./components/MovieInfo/MovieInfo";
 
 const routes: RouteObject[] = [
     {
@@ -48,6 +50,16 @@ const routes: RouteObject[] = [
                     {
                         path: ':queryName',
                         element: <MoviesList whereIAm={'search'} />
+                    }
+                ]
+            },
+            {
+                path: 'info',
+                element: <MovieInfoPage />,
+                children: [
+                    {
+                        path: ':movieId',
+                        element: <MovieInfo />
                     }
                 ]
             }
