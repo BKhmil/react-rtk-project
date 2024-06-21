@@ -16,8 +16,6 @@ const getAllMovieGenres = createAsyncThunk<IGenre[], void>(
     async (_, {fulfillWithValue, rejectWithValue}) => {
         try {
             const {genres} = await genreService.getAllMovieGenres();
-            console.log(genres);
-
             return fulfillWithValue(genres);
         } catch (e) {
             return rejectWithValue(e as AxiosError);

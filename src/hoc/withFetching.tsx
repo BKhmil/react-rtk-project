@@ -10,12 +10,14 @@ interface IProps {
 
 const withFetching = (WrappedComponent: React.ComponentType<any>) => {
     const Fetcher: FC<IProps> = ({ whereIAm }) => {
-        const {genresPaginationBundle} = usePagination();
+        const {genresPaginationBundle, searchPaginationBundle} =
+            usePagination();
         const [searchParams] = useSearchParams();
         const dispatch = useAppDispatch();
 
         useEffect(() => {
             const pageNumber = searchParams.get('page') ?? '1';
+
             switch (whereIAm) {
                 case 'movies': dispatch(moviesActions.getPageWithMovies(parseInt(pageNumber, 10)));
                     break;
@@ -23,10 +25,13 @@ const withFetching = (WrappedComponent: React.ComponentType<any>) => {
                         genreId: parseInt(genresPaginationBundle.genreId ?? '28', 10), pageNumber: pageNumber
                     }));
                     break;
+                case 'search': searchPaginationBundle.query && (dispatch(moviesActions.getMoviesByQuery(
+                    {query: searchPaginationBundle.query, pageNumber})));
+                    break;
                 default:
                     break;
             }
-        }, [searchParams, genresPaginationBundle.genreId, whereIAm]);
+        }, [searchParams, genresPaginationBundle.genreId, whereIAm, searchPaginationBundle.query]);
 
         return <WrappedComponent />;
     };

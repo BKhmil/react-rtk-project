@@ -17,8 +17,11 @@ const MoviesList = () => {
                     error ?
                         <div>error</div>
                             :
-                        currentPage.results.map((movie, index) => (
-                            <MoviesListCard key={index} movie={movie} />))
+                        currentPage.results.length > 1 ?
+                            currentPage.results.map((movie, index) => (
+                                <MoviesListCard key={index} movie={movie} />))
+                            :
+                            <div style={{color: 'snow', height: '80vh', fontSize: '30px'}}>no movies by current query</div>
             }
         </div>
     );

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {memo} from 'react';
 import userIcon from '../../assets/icons/userIcon.png';
 import logoutIcon from '../../assets/icons/logoutIcon.png';
 import css from './UserInfo.module.css';
 
-const UserInfo = () => {
+const UserInfo = memo(() => {
     return (
         <div className={css.UserInfo}>
             <div>
@@ -14,6 +14,6 @@ const UserInfo = () => {
             <img src={logoutIcon} alt="logout-icon" style={{marginLeft: '20px'}} />
         </div>
     );
-};
+});
 
 export default UserInfo;

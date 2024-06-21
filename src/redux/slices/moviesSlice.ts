@@ -44,11 +44,12 @@ const getMoviesPageWithGenres = createAsyncThunk<IPage, {genreId: number, pageNu
     }
 );
 
-const getMoviesByQuery = createAsyncThunk<IPage, string>(
+const getMoviesByQuery = createAsyncThunk<IPage, {query: string, pageNumber: string}>(
     'moviesSlice/getMoviesByQuery',
-    async (query: string, {fulfillWithValue, rejectWithValue}) => {
+    async ({query, pageNumber}, {fulfillWithValue, rejectWithValue}) => {
         try {
-            const page = await movieService.searchMoviesByQuery(query);
+            const page = await movieService.searchMoviesByQuery(query, pageNumber);
+            console.log(page);
             return fulfillWithValue(page);
         } catch (e) {
             return rejectWithValue(e as AxiosError);
@@ -78,7 +79,15 @@ const moviesSlice = createSlice({
                 state.loading = false;
                 state.error = action.error.message || 'Movies by genres loading error';
             })
-            .addMatcher(isPending(getPageWithMovies, getMoviesPageWithGenres), state => {
+            .addCase(getMoviesByQuery.fulfilled, (state, action) => {
+                state.currentPage = action.payload;
+                state.loading = false;
+            })
+            .addCase(getMoviesByQuery.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message || 'Movies by query loading error';
+            })
+            .addMatcher(isPending(getPageWithMovies, getMoviesPageWithGenres, getMoviesByQuery), state => {
                 state.loading = true;
                 state.error = null;
             })

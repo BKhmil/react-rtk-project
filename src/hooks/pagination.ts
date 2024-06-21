@@ -1,11 +1,15 @@
 import {useNavigate, useParams, useSearchParams} from 'react-router-dom';
 import {useState, useEffect} from "react";
+import {useAppSelector} from "./reduxHooks";
 
 const usePagination = () => {
     const navigate = useNavigate();
     const params = useParams();
-    const [searchParams] = useSearchParams();
     const genreId = params.genreId;
+    const query = params.queryName;
+    const [searchParams] = useSearchParams();
+    const { total_pages } = useAppSelector(state =>
+        state.moviesSlice.currentPage);
 
     const [activePageNumber, setActivePageNumber] =
         useState<number>(1);
@@ -18,22 +22,30 @@ const usePagination = () => {
         const pageNumber = parseInt(searchParams.get('page') || '1', 10);
         setActivePageNumber(pageNumber);
 
-        const pageSection = Math.ceil(pageNumber / 10);
+        const maxPageNumber = Math.min(total_pages, 500);
+        const pagesPerSection = maxPageNumber <= 10 ? maxPageNumber : 10;
+        const pageSection = Math.ceil(pageNumber / pagesPerSection);
         setCurrentPagesSection(pageSection);
 
         if (genreId) setActiveBadgeId(+genreId);
-    }, [searchParams, genreId]);
+    }, [searchParams, genreId, query]);
 
     const pageButtonClickHandler = (pageNumber: number, forWhat: string) => {
         setActivePageNumber(pageNumber);
 
-        if (forWhat === 'movies') {
-            navigate(`/movies?page=${pageNumber}`);
-        } else {
-            navigate(`/genres/${genreId}?page=${pageNumber}`);
+        switch (forWhat) {
+            case 'movies':
+                navigate('/movies?page=' + pageNumber);
+                break;
+            case 'search':
+                navigate('/search/' + query + '?page=' + pageNumber);
+                break;
+            default:
+                navigate('/genres/' + genreId + '?page=' + pageNumber);
+                break;
         }
 
-        window.scrollTo({ top: 0 });
+        window.scrollTo({top: 0});
     };
 
     const prevPageSection = () => {
@@ -48,7 +60,7 @@ const usePagination = () => {
         setActiveBadgeId(genreId);
         setActivePageNumber(1);
         setCurrentPagesSection(1);
-        navigate(`/genres/${genreId}?page=1`);
+        navigate('/genres/' + genreId + '?page=1');
     };
 
     return {
@@ -58,12 +70,16 @@ const usePagination = () => {
             pageButtonClickHandler,
             prevPageSection,
             nextPageSection,
-            setActivePageNumber
+            setActivePageNumber,
+            total_pages
         },
         genresPaginationBundle: {
             activeBadgeId,
             genreBadgeClickHandler,
             genreId
+        },
+        searchPaginationBundle: {
+            query
         }
     };
 };

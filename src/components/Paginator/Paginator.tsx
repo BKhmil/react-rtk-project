@@ -14,16 +14,23 @@ const MoviesPaginator: FC<IProps> = ({forWhat}) => {
         moviesPaginationBundle
     } = usePagination();
 
+    const maxPageNumber = Math.min(moviesPaginationBundle.total_pages, 500);
+    const pagesPerSection = maxPageNumber <= 10 ? maxPageNumber : 10;
+    const totalSections = Math.ceil(maxPageNumber / pagesPerSection);
+
     const buttonsGenerator = (currentPageSection: number) => {
         const buttons: ReactElement[] = [];
+        const startPage = (currentPageSection - 1) * pagesPerSection + 1;
+        const endPage = Math.min(startPage + pagesPerSection - 1, maxPageNumber);
 
-        for (let i = currentPageSection * 10 - 9; i <= currentPageSection * 10; ++i) {
+        for (let i = startPage; i <= endPage; ++i) {
             buttons.push(
                 <button
                     key={i}
                     className={i === moviesPaginationBundle.activePageNumber ? css.active : ''}
                     onClick={() => moviesPaginationBundle.pageButtonClickHandler(i, forWhat)}
-                >{i}</button>);
+                >{i}</button>
+            );
         }
 
         return buttons;
@@ -32,12 +39,12 @@ const MoviesPaginator: FC<IProps> = ({forWhat}) => {
     return (
         <div className={css.PaginatorContainer}>
             <button
-                disabled={moviesPaginationBundle.currentPagesSection < 2}
+                disabled={moviesPaginationBundle.currentPagesSection <= 1}
                 onClick={() => moviesPaginationBundle.prevPageSection()}
             >{'<<'}</button>
             {buttonsGenerator(moviesPaginationBundle.currentPagesSection)}
             <button
-                disabled={moviesPaginationBundle.currentPagesSection > 4}
+                disabled={moviesPaginationBundle.currentPagesSection >= totalSections}
                 onClick={() => moviesPaginationBundle.nextPageSection()}
             >{'>>'}</button>
         </div>
@@ -79,8 +86,9 @@ const GenresPaginator = () => {
 const Paginator: FC<IProps> = ({forWhat}) => {
     return (() => {
         switch (forWhat) {
-            case 'movies': return <MoviesPaginator forWhat={'movies'}/>;
+            case 'movies': return <MoviesPaginator forWhat={'movies'} />;
             case 'genres': return <MoviesPaginator forWhat={'genres'} />
+            case 'search': return <MoviesPaginator forWhat={'search'} />
             default: return <GenresPaginator />
         }
     })();

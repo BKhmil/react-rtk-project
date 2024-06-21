@@ -9,8 +9,8 @@ const urls = {
             baseURL + '/discover/movie?with_genres=' + genreIds + '&page=' + pageNumber
     },
     search: {
-        getMovieByQuery: (query: string) =>
-            baseURL + 'search/movie?query=' + query
+        getMovieByQuery: (query: string, pageNumber: string) =>
+            baseURL + '/search/movie?query=' + query + '&page=' + pageNumber
     },
     genres: {
         movieList: baseURL + '/genre/movie/list'
