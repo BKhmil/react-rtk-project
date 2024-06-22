@@ -7,18 +7,26 @@
 
 .PaginatorContainer button {
     outline: none;
-    border: #030b26 solid 2px;
+    border-style: solid;
+    border-width: 2px;
     width: 50px;
     height: 50px;
     font-size: 20px;
-    color: #0196bd;
     background-color: inherit;
     cursor: pointer;
     transition-duration: 0.5s;
 }
 
+.sectionDark {
+    color: #0196bd;
+}
+
+.sectionLight {
+    color: #030b26;
+}
+
 button[disabled] {
-    color: #545659;
+    color: red;
 }
 
 button:hover {
@@ -27,7 +35,7 @@ button:hover {
 }
 
 button[disabled]:hover {
-    color: #545659;
+    color: red;
     text-shadow: none;
 }
 

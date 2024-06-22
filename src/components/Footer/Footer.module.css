@@ -1,5 +1,4 @@
 .Footer {
-    background-color: #030b26;
     display: flex;
     padding: 20px 8vw;
     align-items: center;
@@ -9,4 +8,9 @@
 .Footer > div {
     display: flex;
     align-items: center;
+}
+
+.icon {
+    width: 40px;
+    cursor: pointer;
 }

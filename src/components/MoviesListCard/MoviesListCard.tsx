@@ -12,6 +12,7 @@ interface IProps {
 }
 
 const MoviesListCard: FC<IProps> = ({movie}) => {
+    const {theme} = useAppSelector(state => state.themeSlice);
     const genres = useAppSelector(state => state.genresSlice.genres);
 
     // todo: wrap in useMemo
@@ -31,13 +32,14 @@ const MoviesListCard: FC<IProps> = ({movie}) => {
             />
             <StarRatings
                 rating={movie.vote_average}
-                starRatedColor="gold"
+                starEmptyColor="darkgrey"
+                starRatedColor={theme === 'dark' ? "gold" : "red"}
                 numberOfStars={10}
                 starDimension="17px"
                 starSpacing="1px"
                 name='rating'
             />
-            <div style={{color: '#0196bd', textAlign: 'center', fontSize: '20px'}}>{movie.title}</div>
+            <div className={css.title} style={theme === 'dark' ? {color: '#0196bd'} : {color: '#0a1432'}}>{movie.title}</div>
             <div className={css.BadgesContainer}>
                 {movieGenres.map((genre, index) => (
                     <GenreBadge key={index} genre={genre}/>

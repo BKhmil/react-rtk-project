@@ -1,6 +1,5 @@
 .Header {
     height: 10vh;
-    background-color: #030b26;
     padding: 0 8vw;
     display: flex;
     justify-content: space-between;
@@ -15,7 +14,6 @@
 
 .logoSection > div {
     font-size: 32px;
-    color: #0196bd;
     height: fit-content;
     font-weight: 600;
 }

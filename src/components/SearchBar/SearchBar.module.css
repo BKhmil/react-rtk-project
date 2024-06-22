@@ -5,6 +5,9 @@
 
 .wrapper, .wrapper > input, .wrapper button {
     outline: none;
+}
+
+.wrapper, .wrapper button {
     border: none;
 }
 
@@ -16,8 +19,7 @@
     box-sizing: border-box;
     font-size: 20px;
     padding: 5px;
-    background-color: #0a1432;
-    color: #b8bbc2;
+    border: 2px solid #0196bd;
 }
 
 .wrapper button, .wrapper img {

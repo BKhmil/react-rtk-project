@@ -14,6 +14,7 @@ const MovieInfo = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const {movie, error, loading} = useAppSelector(state => state.moviesSlice);
+    const {theme} = useAppSelector(state => state.themeSlice);
     const params = useParams();
     const movieId = params.movieId;
     const prevPage = localStorage.getItem('prevPage');
@@ -25,35 +26,41 @@ const MovieInfo = () => {
     if (!movie) return <div>Error: {error}</div>
 
     return (
-        <div>
+        <div className={css.wrapper}>
             {
                 loading ?
                     <Preloader />
                     :
-                    <div className={css.MovieInfo}>
-                        <div>{movie.title}</div>
-                        <div style={{display: 'flex'}}>
+                    <div className={css.MovieInfo} style={{color: '#b8bbc2'}}>
+                        <div className={css.title}>{movie.title}</div>
+                        <div style={{display: 'flex', justifyContent: 'space-evenly'}}>
                             <PosterPreview
                                 path={posterBaseURL + '/w400' + movie.poster_path}
                                 alter={movie.title}
                                 styles={{marginBottom: '5px'}}
                                 withPlay={false}
                             />
-                            <div>
+                            <div className={css.info}>
                                 <div>Rating:</div>
                                 <StarRatings
                                     rating={movie.vote_average}
-                                    starRatedColor="gold"
+                                    starRatedColor={theme === 'dark' ? "gold" : "red"}
                                     numberOfStars={10}
-                                    starDimension="30px"
+                                    starDimension="40px"
                                     starSpacing="1px"
                                     name='rating'
                                 />
-                                <div>Genres</div>
+                                <div>Genres:</div>
                                 <Paginator forWhat={'fullInfo'} />
+                                <div className={css.part}>Origin country: {movie.origin_country.join(', ')}</div>
+                                <div className={css.part}>Release date: {movie.release_date}</div>
+                                <div className={css.part}>Runtime: {movie.runtime} min</div>
                             </div>
                         </div>
-                        <div></div>
+                        <div style={{margin: '20px auto', width: '85%'}}>
+                            <div style={{fontSize: '40px', textAlign: 'center', marginBottom: '10px'}}>Overview</div>
+                            <div style={{fontSize: '32px', textAlign: 'center', marginBottom: '10px'}}>{movie.overview}</div>
+                        </div>
                         <img
                             src={backIcon}
                             alt="back-icon"

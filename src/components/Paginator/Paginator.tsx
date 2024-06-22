@@ -12,6 +12,7 @@ const MoviesPaginator: FC<IProps> = ({forWhat}) => {
     const {
         moviesPaginationBundle
     } = usePagination();
+    const {theme} = useAppSelector(state => state.themeSlice);
 
     const maxPageNumber = Math.min(moviesPaginationBundle.total_pages, 500);
     const pagesPerSection = maxPageNumber <= 10 ? maxPageNumber : 10;
@@ -27,6 +28,7 @@ const MoviesPaginator: FC<IProps> = ({forWhat}) => {
                 <button
                     key={i}
                     className={i === moviesPaginationBundle.activePageNumber ? css.active : ''}
+                    style={theme === 'dark' ? {borderColor: '#030b26', color: '#0196bd'} : {color: '#030b26', borderColor: 'darkgrey'}}
                     onClick={() => moviesPaginationBundle.pageButtonClickHandler(i, forWhat)}
                 >{i}</button>
             );
@@ -37,15 +39,23 @@ const MoviesPaginator: FC<IProps> = ({forWhat}) => {
 
     return (
         <div className={css.PaginatorContainer}>
-            <button
-                disabled={moviesPaginationBundle.currentPagesSection <= 1}
-                onClick={() => moviesPaginationBundle.prevPageSection()}
-            >{'<<'}</button>
+            {
+                moviesPaginationBundle.total_pages > 10 && <button
+                    disabled={moviesPaginationBundle.currentPagesSection <= 1}
+                    onClick={() => moviesPaginationBundle.prevPageSection()}
+                    style={theme === 'dark' ? {borderColor: '#030b26'} : {borderColor: 'darkgrey'}}
+                    className={theme === 'dark' ? css.sectionDark : css.sectionLight}
+                >{'<<'}</button>
+            }
             {buttonsGenerator(moviesPaginationBundle.currentPagesSection)}
-            <button
-                disabled={moviesPaginationBundle.currentPagesSection >= totalSections}
-                onClick={() => moviesPaginationBundle.nextPageSection()}
-            >{'>>'}</button>
+            {
+                moviesPaginationBundle.total_pages > 10 && <button
+                    disabled={moviesPaginationBundle.currentPagesSection >= totalSections}
+                    onClick={() => moviesPaginationBundle.nextPageSection()}
+                    style={theme === 'dark' ? {borderColor: '#030b26'} : {borderColor: 'darkgrey'}}
+                    className={theme === 'dark' ? css.sectionDark : css.sectionLight}
+                >{'>>'}</button>
+            }
         </div>
     );
 };
@@ -59,7 +69,7 @@ const GenresPaginator = () => {
 
         genres.forEach((genre, index) => {
             badges.push(<GenreElement
-                            key={index}
+                key={index}
                             genre={genre}
                             clickHandler={() => genresPaginationBundle.genreBadgeClickHandler(genre.id)}
                             activeId={genresPaginationBundle.activeBadgeId}

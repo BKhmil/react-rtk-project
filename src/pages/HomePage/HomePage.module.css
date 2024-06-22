@@ -12,7 +12,6 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.8);
     pointer-events: none;
     z-index: 1;
 }
@@ -26,7 +25,6 @@
     z-index: 2;
     padding-top: 20vh;
     padding-left: 8vw;
-    color: #b8bbc2;
 }
 
 .content > h1 {
@@ -39,9 +37,7 @@
 
 .content > button {
     width: 200px;
-    background-color: #030b26;
     font-size: 26px;
-    color: #0196bd;
     padding: 10px;
     border-radius: 20px;
     outline: none;
