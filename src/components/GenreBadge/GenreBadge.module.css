@@ -1,21 +1,9 @@
 .GenreBadge {
-    background-color: #030b26;
-    color: #b8bbc2;
-    border: none;
-    outline: none;
-    border-radius: 40px;
-    padding: 10px;
-    margin: 3px;
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin: 2px;
+    font-size: 12px;
     display: inline-block;
-    cursor: pointer;
-    transition-duration: 0.5s;
-}
-
-.active {
-    text-decoration: underline;
-}
-
-.GenreBadge:hover {
-    color: snow;
-    text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em #0196bd;
 }

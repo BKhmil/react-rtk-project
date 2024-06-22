@@ -1,9 +1,8 @@
-import React, {FC, ReactElement, useEffect} from 'react';
+import React, {FC, ReactElement} from 'react';
 import css from './Paginator.module.css';
 import {usePagination} from "../../hooks/pagination";
-import {useAppDispatch, useAppSelector} from "../../hooks/reduxHooks";
-import GenreBadge from "../GenreBadge/GenreBadge";
-import {genresActions} from "../../redux/slices/genresSlice";
+import {useAppSelector} from "../../hooks/reduxHooks";
+import GenreElement from "../GenreElement/GenreElement";
 
 interface IProps {
     forWhat: string;
@@ -54,17 +53,12 @@ const MoviesPaginator: FC<IProps> = ({forWhat}) => {
 const GenresPaginator = () => {
     const {genresPaginationBundle} = usePagination();
     const {genres} = useAppSelector(state => state.genresSlice);
-    const dispatch = useAppDispatch();
-
-    useEffect(() => {
-        dispatch(genresActions.getAllMovieGenres());
-    }, []);
 
     const badgesGenerator = () => {
         const badges: ReactElement[] = [];
 
         genres.forEach((genre, index) => {
-            badges.push(<GenreBadge
+            badges.push(<GenreElement
                             key={index}
                             genre={genre}
                             clickHandler={() => genresPaginationBundle.genreBadgeClickHandler(genre.id)}

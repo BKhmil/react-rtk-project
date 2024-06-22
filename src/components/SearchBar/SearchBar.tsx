@@ -15,13 +15,13 @@ const SearchBar = () => {
 
     const search: SubmitHandler<IForm> = ({search}) => {
         navigate('/search/' + search + '?page=1');
+        reset();
     }
 
     return (
         <form onSubmit={handleSubmit(search)} className={css.wrapper}>
             <input type="text"  {...register('search')}
                    placeholder='search...'
-                   onFocus={() => reset()}
                    required={true}
                    autoComplete="off"
             />

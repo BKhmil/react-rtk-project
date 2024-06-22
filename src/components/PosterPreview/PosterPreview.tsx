@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import playIcon from '../../assets/icons/playIcon.png';
 import css from './PosterPreview.module.css';
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 interface IProps {
     path: string;
@@ -13,6 +13,7 @@ interface IProps {
 
 const PosterPreview: FC<IProps> = ({path, alter, styles, withPlay, movieId}) => {
     const navigate = useNavigate();
+    const location = useLocation();
 
     return (
         <div className={css.poster}>
@@ -21,7 +22,10 @@ const PosterPreview: FC<IProps> = ({path, alter, styles, withPlay, movieId}) => 
                 withPlay && <img src={playIcon}
                                  alt={''}
                                  className={css.play}
-                                 onClick={(() => navigate('/info/' + movieId))}
+                                 onClick={(() => {
+                                     navigate('/info/' + movieId);
+                                     localStorage.setItem('prevPage', location.pathname + location.search);
+                                 })}
                             />
             }
         </div>
