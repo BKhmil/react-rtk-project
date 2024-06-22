@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useMemo} from 'react';
 import {IMovie} from "../../interfaces/movie.interface";
 import {posterBaseURL} from "../../constants/urls";
 import StarRatings from 'react-star-ratings';
@@ -15,11 +15,12 @@ const MoviesListCard: FC<IProps> = ({movie}) => {
     const {theme} = useAppSelector(state => state.themeSlice);
     const genres = useAppSelector(state => state.genresSlice.genres);
 
-    // todo: wrap in useMemo
-    const movieGenres = movie.genre_ids.map(genreId => {
-        const genre = genres.find(g => g.id === genreId);
-        return genre ? genre.name : '';
-    });
+    const movieGenres = useMemo(() => {
+        return movie.genre_ids.map(genreId => {
+            const genre = genres.find(g => g.id === genreId);
+            return genre ? genre.name : '';
+        })
+    }, [genres, movie.genre_ids]);
 
     return (
         <div className={css.MoviesListCard}>

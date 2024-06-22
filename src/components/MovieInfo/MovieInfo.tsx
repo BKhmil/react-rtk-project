@@ -31,7 +31,7 @@ const MovieInfo = () => {
                 loading ?
                     <Preloader />
                     :
-                    <div className={css.MovieInfo} style={{color: '#b8bbc2'}}>
+                    <div className={css.MovieInfo} style={theme === 'dark' ? {color: '#b8bbc2'} : {color: '#0a1432'}}>
                         <div className={css.title}>{movie.title}</div>
                         <div style={{display: 'flex', justifyContent: 'space-evenly'}}>
                             <PosterPreview
@@ -44,6 +44,7 @@ const MovieInfo = () => {
                                 <div>Rating:</div>
                                 <StarRatings
                                     rating={movie.vote_average}
+                                    starEmptyColor="darkgrey"
                                     starRatedColor={theme === 'dark' ? "gold" : "red"}
                                     numberOfStars={10}
                                     starDimension="40px"
@@ -51,7 +52,7 @@ const MovieInfo = () => {
                                     name='rating'
                                 />
                                 <div>Genres:</div>
-                                <Paginator forWhat={'fullInfo'} />
+                                <Paginator forWhat={'full'} genresFromProps={movie.genres} />
                                 <div className={css.part}>Origin country: {movie.origin_country.join(', ')}</div>
                                 <div className={css.part}>Release date: {movie.release_date}</div>
                                 <div className={css.part}>Runtime: {movie.runtime} min</div>

@@ -14,10 +14,8 @@ const movieService = {
         apiService.get(urls.search.getMovieByQuery(query, pageNumber)).then(response =>
             response.data),
     findMovieById: (id: number): Promise<ISingleMovie> =>
-        apiService.get(urls.findMovieById.find(id)).then(response => {
-            console.log(response.data)
-            return response.data;
-        })
+        apiService.get(urls.findMovieById.find(id)).then(response =>
+            response.data)
 }
 
 export {

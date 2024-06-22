@@ -7,8 +7,6 @@ const Switcher = () => {
     const {theme} = useAppSelector(state => state.themeSlice);
     const dispatch = useAppDispatch();
 
-    console.log(theme)
-
     return (
         <div className={css.switchContainer + ' ' + css[theme]}
              onClick={() => dispatch(themeActions.changeTheme())}

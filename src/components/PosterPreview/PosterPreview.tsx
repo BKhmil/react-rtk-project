@@ -24,6 +24,7 @@ const PosterPreview: FC<IProps> = ({path, alter, styles, withPlay, movieId}) => 
                                  className={css.play}
                                  onClick={(() => {
                                      navigate('/info/' + movieId);
+                                     window.scrollTo({top: 0});
                                      localStorage.setItem('prevPage', location.pathname + location.search);
                                  })}
                             />

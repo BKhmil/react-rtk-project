@@ -4,6 +4,7 @@ import MoviesListCard from "../MoviesListCard/MoviesListCard";
 import css from './MovieList.module.css';
 import withFetching from "../../hoc/withFetching";
 import Preloader from "../Preloader/Preloader";
+import ErrorBox from "../ErrorBox/ErrorBox";
 
 const MoviesList = () => {
     const {currentPage, loading, error} = useAppSelector(state => state.moviesSlice);
@@ -15,13 +16,13 @@ const MoviesList = () => {
                     <Preloader />
                     :
                     error ?
-                        <div>error</div>
+                        <ErrorBox message={error}/>
                             :
                         currentPage.results.length > 1 ?
                             currentPage.results.map((movie, index) => (
                                 <MoviesListCard key={index} movie={movie} />))
                             :
-                            <div style={{color: 'snow', height: '80vh', fontSize: '30px'}}>no movies by current query</div>
+                            <ErrorBox message={'No movies by current query'}/>
             }
         </div>
     );

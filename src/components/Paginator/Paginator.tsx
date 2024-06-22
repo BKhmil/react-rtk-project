@@ -3,9 +3,11 @@ import css from './Paginator.module.css';
 import {usePagination} from "../../hooks/pagination";
 import {useAppSelector} from "../../hooks/reduxHooks";
 import GenreElement from "../GenreElement/GenreElement";
+import {IGenre} from "../../interfaces/genre.interface";
 
 interface IProps {
     forWhat: string;
+    genresFromProps?: IGenre[];
 }
 
 const MoviesPaginator: FC<IProps> = ({forWhat}) => {
@@ -60,13 +62,22 @@ const MoviesPaginator: FC<IProps> = ({forWhat}) => {
     );
 };
 
-const GenresPaginator = () => {
+const GenresPaginator:FC<{genresFromProps?: IGenre[]}> = ({genresFromProps}) => {
     const {genresPaginationBundle} = usePagination();
     const {genres} = useAppSelector(state => state.genresSlice);
 
     const badgesGenerator = () => {
         const badges: ReactElement[] = [];
 
+        genresFromProps ? genresFromProps.forEach((genre, index) => {
+            badges.push(<GenreElement
+                key={index}
+                genre={genre}
+                clickHandler={() => genresPaginationBundle.genreBadgeClickHandler(genre.id)}
+            />);
+
+        })
+        :
         genres.forEach((genre, index) => {
             badges.push(<GenreElement
                 key={index}
@@ -87,12 +98,13 @@ const GenresPaginator = () => {
     );
 };
 
-const Paginator: FC<IProps> = ({forWhat}) => {
+const Paginator: FC<IProps> = ({forWhat, genresFromProps}) => {
     return (() => {
         switch (forWhat) {
             case 'movies': return <MoviesPaginator forWhat={'movies'} />;
             case 'genres': return <MoviesPaginator forWhat={'genres'} />
             case 'search': return <MoviesPaginator forWhat={'search'} />
+            case 'full': return <GenresPaginator genresFromProps={genresFromProps}/>
             default: return <GenresPaginator />
         }
     })();

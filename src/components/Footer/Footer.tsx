@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {memo} from 'react';
 import logo from '../../assets/icons/logo.png';
 import githubIcon from '../../assets/icons/githubIcon.png';
 import css from './Footer.module.css';
 import {useAppSelector} from "../../hooks/reduxHooks";
 
-const Footer = () => {
+const Footer = memo(() => {
     const {theme} = useAppSelector(state => state.themeSlice);
 
     return (
@@ -19,6 +19,6 @@ const Footer = () => {
                  onClick={() => window.open('https://github.com/BKhmil', '_blank')} />
         </footer>
     );
-};
+});
 
 export default Footer;

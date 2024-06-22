@@ -22,7 +22,7 @@ const usePagination = () => {
         const pageNumber = parseInt(searchParams.get('page') || '1', 10);
         setActivePageNumber(pageNumber);
 
-        const maxPageNumber = Math.min(total_pages, 500);
+        const maxPageNumber = total_pages === 0 ? 500 : Math.min(total_pages, 500);
         const pagesPerSection = maxPageNumber <= 10 ? maxPageNumber : 10;
         const pageSection = Math.ceil(pageNumber / pagesPerSection);
         setCurrentPagesSection(pageSection);
